@@ -48,8 +48,6 @@ pokemonsRoute.post(function(req, res){
     pokemon.attack = req.body.attack;
     pokemon.defense = req.body.defense;
 
-    console.log(req.body);
-
     //save the object
     pokemon.save(function(err, data){
         if(err){
@@ -63,7 +61,7 @@ pokemonsRoute.post(function(req, res){
 //endpoint that will return all the Pokemons
 pokemonsRoute.get(function(req, res){
     //use Pokemon model to find all the pokemons
-    Pokemon.find(function(err, pokemons){
+    Pokemon.find({},{img: 0},function(err, pokemons){
       if(err){
         res.send(err);
       }
@@ -71,6 +69,64 @@ pokemonsRoute.get(function(req, res){
       res.json(pokemons);
     });
 });
+
+//route that jandle single pokemons
+const pokemonRoute = router.route('/pokemons/:id');
+
+//get resquest for single pokemon
+pokemonRoute.get(function(req, res){
+
+    //find by id that brings the pokemons data without the img field
+    Pokemon.findById(req.params.id, {img: 0}, function(err, pokemon){
+        if(err){
+            res.send(err);
+        }
+
+        res.json(pokemon);
+    });
+});
+
+//update the value for single pokemon
+pokemonRoute.put(function(req, res){
+
+    //find the specific pokemon to update
+    Pokemon.findById(req.params.id, {img: 0}, function(err, pokemon){
+
+      if(err){
+          res.send(err);
+      }
+
+      //update the value for the field attack
+      pokemon.attack = req.body.attack;
+
+      //save the updated pokemon
+      pokemon.save(function(err){
+          if(err){
+              res.send(err);
+          }
+
+          res.json(pokemon);
+      });
+    });
+});
+
+//route thats deletes the pokemon
+pokemonRoute.delete(function(req, res){
+
+    var id = req.params.id;
+
+    //function thats find the pokemon and deletes it
+    Pokemon.findByIdAndRemove(req.params.id, function(err){
+
+        if(err){
+            res.send(err);
+        }
+
+        res.json({message: 'Pokemons successfully removed:', id})
+
+    })
+
+})
 
 //register all your routes with api
 app.use('/api', router);
