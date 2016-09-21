@@ -1,0 +1,26 @@
+{
+  "name": "pokemon-rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weldermarcosxd/pokemon-rest-api.git"
+  },
+  "author": "@umemaro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/weldermarcosxd/pokemon-rest-api/issues"
+  },
+  "homepage": "https://github.com/weldermarcosxd/pokemon-rest-api#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.6.1"
+  }
+}
